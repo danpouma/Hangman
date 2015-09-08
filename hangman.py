@@ -1,4 +1,5 @@
 from Tkinter import *
+import time
 
 
 class HangmanGUI():
@@ -82,6 +83,7 @@ class HangmanGUI():
                         self.frames[x].insert("1.0", "YOU WIN")
 
         def play(self):
+                end = False
                 #loop till guesses are out
                 if ((self.hangman.player.get_guesses() < (len(self.hangman.word.get_word())+2)) and not self.hangman.player.is_winner() and self.hangman.player.get_wrong_guesses() < 6):
                         self.hangman.evaluate_guess(self.get_user_input())
@@ -89,7 +91,9 @@ class HangmanGUI():
                         self.display_word()
                         self.display_wrong_letters()
                         self.display_character()
-
+                if (self.hangman.player.get_wrong_guesses() >= 6):
+                        self.display_you_lose()
+                """
                 if (self.hangman.player.is_winner()):
                         self.display_you_win()
                         
@@ -99,6 +103,9 @@ class HangmanGUI():
                 if (not self.hangman.is_game_over() and not self.hangman.player.is_winner()):
                         # final guess.. change button to say it
                         self.display_final_guess()
+                """
+                # Insert code to end-game
+                #self.hGUI.destroy()
 
 class Hangman():
     def __init__(self):
