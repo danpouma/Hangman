@@ -1,5 +1,6 @@
 from Tkinter import *
 import time
+import random
 
 
 class HangmanGUI():
@@ -255,7 +256,9 @@ class Player():
 
 class Word():
     def __init__(self):
-        self.word = "irobot"
+        with open("words.txt") as f:
+            words = f.readlines()
+        self.word = random.choice(words)
         self.word = self.word.lower()
 
     def get_word(self):
