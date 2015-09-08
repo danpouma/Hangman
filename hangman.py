@@ -102,18 +102,6 @@ class HangmanGUI():
                 else:
                         self.display_final_guess()
 
-
-                """
-                if (not self.hangman.is_game_over() and not self.hangman.player.is_winner()):
-                        # final guess.. change button to say it
-                        self.display_final_guess()
-                
-                if (self.hangman.player.is_winner()):
-                        self.display_you_win()
-                """
-                # Insert code to end-game
-                #self.hGUI.destroy()
-
 class Hangman():
     def __init__(self):
         self.word = Word()
