@@ -7,12 +7,20 @@ class HangmanGUI():
         def __init__(self):
                 self.initialize_gui()
                 self.hangman = Hangman()
+
+        def key(event):
+                if event.keysym == "Return" and not event.char:
+                       #self.play()
+                        print "deeee"
+        def bind_all(self):
+                self.hGUI.bind_all('<Key>', self.key) # Used for catching return
                 
         def initialize_gui(self):
                 self.hGUI = Tk()
                 self.hGUI.title("HANGMAN! by dan p")
                 self.hGUI.geometry('{}x{}'.format(750,250))
                 self.hGUI.resizable(width=FALSE, height=FALSE)
+                #self.hGUI.bind_all('<Key>', self.key) # Used for catching return
                 self.frame = Frame(self.hGUI, height=1, width=2)
                 self.frame.pack()
                 self.bottomframe = Frame(self.hGUI)
@@ -20,6 +28,7 @@ class HangmanGUI():
                 self.frames = []
                 
         def mainloop(self):
+                self.hGUI.bind_all('<Key>', self.key) # Used for catching return
                 self.hGUI.mainloop()
 
         def create_frames(self):
@@ -267,6 +276,11 @@ class Word():
     def word_length(self):
         return len(self.word)
 
+def key(event):
+        if event.keysym == "Return" and not event.char:
+                #self.play()
+                print "deeee"
+
 def main():
         gui = HangmanGUI()
         gui.create_button()
@@ -275,7 +289,9 @@ def main():
         gui.display_word()
         gui.display_wrong_letters()
         gui.display_character()
-
+        
+        gui.bind_all() # Used for catching return
+        
         gui.mainloop()
 
 if __name__ == "__main__":
