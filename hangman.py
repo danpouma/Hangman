@@ -8,10 +8,10 @@ class HangmanGUI():
                 self.initialize_gui()
                 self.hangman = Hangman()
 
-        def key(event):
-                if event.keysym == "Return" and not event.char:
-                       #self.play()
-                        print "deeee"
+        def key(self, event):
+                if event.keysym == "Return":
+                        self.play()
+                        
         def bind_all(self):
                 self.hGUI.bind_all('<Key>', self.key) # Used for catching return
                 
@@ -41,7 +41,7 @@ class HangmanGUI():
                 self.frames.append(user_frame)
                 
         def create_button(self):
-                self.user_button = Button(self.bottomframe, text="Press to submit letter", command=self.play)
+                self.user_button = Button(self.bottomframe, text="Press enter to submit letter") #, command=self.play)
                 self.user_button.pack( side = RIGHT)
 
         def get_user_input(self):
@@ -92,6 +92,9 @@ class HangmanGUI():
                         self.frames[x].delete("1.0", END)
                         self.frames[x].insert("1.0", "YOU WIN")
 
+        def clear_user_input(self):
+                self.frames[3].delete("1.0", END)
+
         def play(self):
                 #loop till guesses are out
                 if ((self.hangman.player.get_guesses() < (len(self.hangman.word.get_word())+2)) and not self.hangman.player.is_winner() and self.hangman.player.get_wrong_guesses() < 6):
@@ -107,10 +110,11 @@ class HangmanGUI():
                         if (self.hangman.player.is_winner()):
                                 self.display_you_win()
                                 #time delay
-                                self.hGUI.destroy()
-                                
+                                self.hGUI.destroy()          
                 else:
                         self.display_final_guess()
+                # Clear user input
+                self.clear_user_input()
 
 class Hangman():
     def __init__(self):
