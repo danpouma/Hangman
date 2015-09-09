@@ -13,14 +13,14 @@ class HangmanGUI():
                         self.play()
                         
         def bind_all(self):
-                self.hGUI.bind_all('<Key>', self.key) # Used for catching return
+                self.hGUI.bind_all('<Key>', self.key)
                 
         def initialize_gui(self):
                 self.hGUI = Tk()
                 self.hGUI.title("HANGMAN! by dan p")
                 self.hGUI.geometry('{}x{}'.format(750,250))
                 self.hGUI.resizable(width=FALSE, height=FALSE)
-                #self.hGUI.bind_all('<Key>', self.key) # Used for catching return
+                
                 self.frame = Frame(self.hGUI, height=1, width=2)
                 self.frame.pack()
                 self.bottomframe = Frame(self.hGUI)
@@ -28,7 +28,6 @@ class HangmanGUI():
                 self.frames = []
                 
         def mainloop(self):
-                self.hGUI.bind_all('<Key>', self.key) # Used for catching return
                 self.hGUI.mainloop()
 
         def create_frames(self):
@@ -49,7 +48,7 @@ class HangmanGUI():
             if (invalid_guess):
                 self.user_input = self.frames[3].get("1.0", END)
                 self.hangman.player.set_guess(self.user_input)
-                #self.hangman.player.add_guessed_letter(self.hangman.player.get_guess())
+                self.hangman.player.add_guessed_letter(self.hangman.player.get_guess())
                 if (self.hangman.player.get_guess() not in self.hangman.player.get_guessed_letters()):
                     self.hangman.player.get_guessed_letters().append(self.hangman.player.get_guess())
                     invalid_guess = False
@@ -59,23 +58,19 @@ class HangmanGUI():
             return self.hangman.player.get_guess()
 
         def display_word(self):
-                # Clear text then re-add it
                 self.frames[0].delete("1.0", END)
                 self.frames[0].insert("1.0", "\n\n\n\n\n\n\n"+self.hangman.display_spaces(self.hangman.player.get_guessed_letters()))
 
         def display_wrong_letters(self):
-                # Clear text then re-add it
                 self.frames[1].delete("1.0", END)
                 self.frames[1].insert("1.0", "\n\n\n\n\n\nWrong Guesses:\n"+self.hangman.display_wrong_letters()) #hack for now
 
         def display_character(self):
-                # Clear text then re-add it
                 self.frames[2].delete("1.0", END)
                 self.frames[2].insert("1.0", self.hangman.draw_body_part())
 
         def display_final_guess(self):
                 self.user_button["text"] = "Out of guesses... Enter final guess!"
-                print "You are out of guesses..."
                 word_guess = self.get_user_input()
                 if (word_guess == self.hangman.word.get_word()):
                         self.display_you_win()
@@ -96,7 +91,6 @@ class HangmanGUI():
                 self.frames[3].delete("1.0", END)
 
         def play(self):
-                #loop till guesses are out
                 if ((self.hangman.player.get_guesses() < (len(self.hangman.word.get_word())+2)) and not self.hangman.player.is_winner() and self.hangman.player.get_wrong_guesses() < 6):
                         self.hangman.evaluate_guess(self.get_user_input())
                         self.hangman.does_user_win()
@@ -113,7 +107,6 @@ class HangmanGUI():
                                 self.hGUI.destroy()          
                 else:
                         self.display_final_guess()
-                # Clear user input
                 self.clear_user_input()
 
 class Hangman():
@@ -141,7 +134,6 @@ class Hangman():
             self.player.increment_wrong_guesses()
 
     def display_wrong_letters(self):
-        #print "Wrong Guesses:" ***Figure out how to make this get returned as well.
         if (len(self.player.get_wrong_letters()) == 0):
             return "None"
         else:
@@ -280,22 +272,14 @@ class Word():
     def word_length(self):
         return len(self.word)
 
-def key(event):
-        if event.keysym == "Return" and not event.char:
-                #self.play()
-                print "deeee"
-
 def main():
         gui = HangmanGUI()
         gui.create_button()
         gui.create_frames()
-
         gui.display_word()
         gui.display_wrong_letters()
         gui.display_character()
-        
-        gui.bind_all() # Used for catching return
-        
+        gui.bind_all()
         gui.mainloop()
 
 if __name__ == "__main__":
